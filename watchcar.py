@@ -25,7 +25,7 @@ client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
     client_secret=os.environ.get('CLIENT_SECRET'),
     redirect_uri=os.environ.get('REDIRECT_URI'),
-    scope=['read_vehicle_info'],
+    scope=['read_vehicle_info','read_location'],
     test_mode=True
 )
 
@@ -59,10 +59,11 @@ def vehicle():
     # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
-    info = vehicle.info()
-    print(info)
+    resp = dict(vehicle.info() + vehicle.location())
 
-    return jsonify(info)
+    print(resp)
+
+    return jsonify(resp)
 
 
 if __name__ == "__main__":
