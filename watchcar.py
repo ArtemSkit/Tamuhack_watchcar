@@ -42,7 +42,6 @@ def login():
 def exchange():
     global code
     code = request.args.get('code')
-    # code = '11b7c847-b877-4632-82f0-a0598b35417b'
     # access our global variable and store our access tokens
     global access
     # in a production app you'll want to store this in some kind of
@@ -88,7 +87,7 @@ def locker():
     # lock = request.form['lock']
     mystring = '55'
     try:
-        access = client.exchange_code(code)
+        # access = client.exchange_code(code)
         vehicle_ids = smartcar.get_vehicle_ids(
             access['access_token'])['vehicles']
 
