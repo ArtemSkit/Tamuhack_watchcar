@@ -25,7 +25,7 @@ client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
     client_secret=os.environ.get('CLIENT_SECRET'),
     redirect_uri=os.environ.get('REDIRECT_URI'),
-    scope=['read_vehicle_info','read_location'],
+    scope=['read_vehicle_info','read_location','read_odometer','control_security'],
     test_mode=True
 )
 
@@ -63,7 +63,7 @@ def vehicle():
     #
     # print(resp)
 
-    return jsonify(vehicle.location())
+    return jsonify(dict(vehicle.info() + vehicle.location() + vehicle.odometer()))
 
 
 if __name__ == "__main__":
