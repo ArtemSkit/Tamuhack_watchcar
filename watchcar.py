@@ -1,5 +1,4 @@
-from flask import Flask, redirect, request, jsonify, render_template, session
-from flask.ext.session import Session
+from flask import Flask, jsonify, render_template, session, redirect, url_for, escape, request
 import smartcar
 from flask_cors import CORS
 import os
@@ -11,7 +10,7 @@ os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 app = Flask(__name__)
 SESSION_TYPE = 'redis'
 app.config.from_object(__name__)
-Session(app)
+session(app)
 
 @app.route("/")
 def hello():
