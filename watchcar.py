@@ -3,6 +3,7 @@ import smartcar
 from flask_cors import CORS
 import os
 
+vehicle = None
 os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
 os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
@@ -19,7 +20,6 @@ CORS(app)
 
 # global variable to save our access_token
 access = None
-vehicle = None
 
 client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
@@ -60,7 +60,6 @@ def exchange():
 @app.route('/vehicle', methods=['GET'])
 def vehicle1():
     # access our global variable to retrieve our access tokens
-    global access
     global vehicle
 
     # the list of vehicle ids
