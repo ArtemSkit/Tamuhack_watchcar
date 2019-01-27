@@ -1,8 +1,9 @@
-from flask import Flask, redirect, request, jsonify, render_template
+import random
+
+from flask import Flask, redirect, request, jsonify, render_template, session
 import smartcar
 from flask_cors import CORS
 import os
-from flask_sockets import Sockets
 
 vehicle = None
 os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
@@ -10,7 +11,8 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-sockets = Sockets(app)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or \
+    'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
 
 @app.route("/")
 def hello():
@@ -31,13 +33,13 @@ client = smartcar.AuthClient(
 )
 
 
-@sockets.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET'])
 def login():
     auth_url = client.get_auth_url()
     return redirect(auth_url)
 
 
-@sockets.route('/exchange', methods=['GET'])
+@app.route('/exchange', methods=['GET'])
 def exchange():
     code = request.args.get('code')
     # access our global variable and store our access tokens
@@ -58,7 +60,7 @@ def exchange():
     # return jsonify(resp)
 
 
-@sockets.route('/vehicle', methods=['GET'])
+@app.route('/vehicle', methods=['GET'])
 def vehicle1():
     # access our global variable to retrieve our access tokens
     global vehicle
@@ -74,16 +76,18 @@ def vehicle1():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
+    session['answer'] = random.randint(1, 10)
     return render_template('info.html', data=str(resp))
 
 
-@sockets.route('/locker', methods=['POST'])
+@app.route('/locker', methods=['POST'])
 def locker1():
     # lock = request.form['lock']
     mystring = '55'
     try:
         mystring = mystring + str(vehicle)
         vehicle.lock()
+        print(session['answer'])
     except Exception as e:
         mystring = str(e)
     # vehicle.lock()
@@ -97,8 +101,4 @@ def locker1():
 
 
 if __name__ == "__main__":
-    from gevent import pywsgi
-    from gevent-websocket.handler import WebSocketHandler
-
-    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
-    server.serve_forever()
+    app.run(host='0.0.0.0')
