@@ -84,7 +84,7 @@ def locker():
     # lock = request.form['lock']
     mystring = '55'
     try:
-        print(vehicle)
+        mystring = mystring + str(vehicle)
     except Exception as e :
         mystring = str(e)
     # vehicle.lock()
