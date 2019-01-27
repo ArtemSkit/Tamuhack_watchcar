@@ -3,6 +3,11 @@ import smartcar
 from flask_cors import CORS
 import os
 
+os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
+os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
+os.environ["REDIRECT_URI"] = "https://watchcarapp.com/"
+
+
 app = Flask(__name__)
 
 
