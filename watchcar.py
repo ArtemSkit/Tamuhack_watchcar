@@ -7,7 +7,6 @@ os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
 os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
-
 app = Flask(__name__)
 
 
@@ -25,7 +24,7 @@ client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
     client_secret=os.environ.get('CLIENT_SECRET'),
     redirect_uri=os.environ.get('REDIRECT_URI'),
-    scope=['read_vehicle_info','read_location','read_odometer','control_security'],
+    scope=['read_vehicle_info', 'read_location', 'read_odometer', 'control_security'],
     test_mode=True
 )
 
@@ -60,8 +59,9 @@ def vehicle():
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
     resp = vehicle.info()
-    resp.update(vehicle.location())
+
     resp.update(vehicle.odometer())
+    resp['data']['location'] = (vehicle.location())
     return jsonify(resp)
 
 
