@@ -19,6 +19,7 @@ CORS(app)
 
 # global variable to save our access_token
 access = None
+vehicle = None
 
 client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
@@ -51,6 +52,7 @@ def exchange():
 def vehicle():
     # access our global variable to retrieve our access tokens
     global access
+    global vehicle
 
     # the list of vehicle ids
     vehicle_ids = smartcar.get_vehicle_ids(
@@ -69,13 +71,10 @@ def vehicle():
 @app.route('/locker', methods=['POST'])
 def locker():
     global access
+    global vehicle
 
     lock = request.form['lock']
-    vehicle_ids = smartcar.get_vehicle_ids(
-        access['access_token'])['vehicles']
-    #
-    # # instantiate the first vehicle in the vehicle id list
-    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+
     # vehicle.lock()
     # my_res = ''
     # if lock == '1':
