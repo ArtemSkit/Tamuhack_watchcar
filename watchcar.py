@@ -54,12 +54,11 @@ def vehicle():
     # access our global variable to retrieve our access tokens
     try:
         access = session.get('access', None)
-    except Exception as e:
-        return str(e)
         # the list of vehicle ids
-    vehicle_ids = smartcar.get_vehicle_ids(
-        access['access_token'])['vehicles']
-
+        vehicle_ids = smartcar.get_vehicle_ids(
+            access['access_token'])['vehicles']
+    except Exception as e:
+        return str(smartcar)
         # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
