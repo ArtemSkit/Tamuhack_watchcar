@@ -60,7 +60,7 @@ def exchange():
     # return jsonify(resp)
 
 @app.route('/vehicle', methods=['GET'])
-def vehicle():
+def vehicle1():
     # access our global variable to retrieve our access tokens
     global access
     global vehicle
