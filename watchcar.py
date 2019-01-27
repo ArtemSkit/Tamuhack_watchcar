@@ -81,7 +81,7 @@ def locker():
     #     my_res = vehicle.lock()
     # else:
     #     my_res = vehicle.unlock()
-    return '112'
+    return str(vehicle)
     # return 'script'
 
 
