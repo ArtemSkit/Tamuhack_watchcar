@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, jsonify, render_template, session
+from flask.ext.session import Session
 import smartcar
 from flask_cors import CORS
 import os
@@ -8,7 +9,9 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-
+SESSION_TYPE = 'redis'
+app.config.from_object(__name__)
+Session(app)
 
 @app.route("/")
 def hello():
@@ -72,7 +75,7 @@ def locker():
     lock = request.form['lock']
     mystring = '55'
     try:
-        vehicle = session.get('vehicle')
+        vehicle = session.get('vehicle', None)
         mystring = mystring + str(vehicle.odometer())
     except Exception as e :
         mystring = str(e)
