@@ -78,11 +78,12 @@ def locker():
     lock = request.form['lock']
     mystring = '55'
     try:
-        # vehicle_ids = smartcar.get_vehicle_ids(
-        #     access['access_token'])['vehicles']
+        access = client.exchange_code(code)
+        vehicle_ids = smartcar.get_vehicle_ids(
+            access['access_token'])['vehicles']
 
         # instantiate the first vehicle in the vehicle id list
-        # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+        vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
         vehicle.odometer()
     except Exception as e :
         mystring = str(e)
