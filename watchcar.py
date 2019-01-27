@@ -45,6 +45,7 @@ def exchange():
     # in a production app you'll want to store this in some kind of
     # persistent storage
     access = client.exchange_code(code)
+    session['access'] = access
     return redirect('/vehicle')
 
 
@@ -53,6 +54,7 @@ def vehicle():
     # access our global variable to retrieve our access tokens
     global access
     try:
+        access = session.get('access', None)
         # the list of vehicle ids
         vehicle_ids = smartcar.get_vehicle_ids(
             access['access_token'])['vehicles']
