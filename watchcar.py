@@ -97,4 +97,8 @@ def locker1():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    from gevent import pywsgi
+    from gevent-websocket.handler import WebSocketHandler
+
+    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    server.serve_forever()
