@@ -1,7 +1,8 @@
-from flask import Flask, redirect, request, jsonify, render_template, session
+from flask import Flask, redirect, request, jsonify, render_template
 import smartcar
 from flask_cors import CORS
 import os
+from flask_sockets import Sockets
 
 vehicle = None
 os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
@@ -9,11 +10,8 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-try:
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or \
-    'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
-except Exception as e:
-    print('!!!!!!!!!' + str(e))
+sockets = Sockets(app)
+
 @app.route("/")
 def hello():
     return "<h1 style='color:blue'>Hello There!</h1>"
@@ -33,13 +31,13 @@ client = smartcar.AuthClient(
 )
 
 
-@app.route('/login', methods=['GET'])
+@sockets.route('/login', methods=['GET'])
 def login():
     auth_url = client.get_auth_url()
     return redirect(auth_url)
 
 
-@app.route('/exchange', methods=['GET'])
+@sockets.route('/exchange', methods=['GET'])
 def exchange():
     code = request.args.get('code')
     # access our global variable and store our access tokens
@@ -60,7 +58,7 @@ def exchange():
     # return jsonify(resp)
 
 
-@app.route('/vehicle', methods=['GET'])
+@sockets.route('/vehicle', methods=['GET'])
 def vehicle1():
     # access our global variable to retrieve our access tokens
     global vehicle
@@ -71,10 +69,7 @@ def vehicle1():
 
     # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-    try:
-        session['answer'] = vehicle
-    except Exception as e:
-        return str(e)
+
     resp = vehicle.info()
 
     resp.update(vehicle.odometer())
@@ -82,14 +77,13 @@ def vehicle1():
     return render_template('info.html', data=str(resp))
 
 
-@app.route('/locker', methods=['POST'])
+@sockets.route('/locker', methods=['POST'])
 def locker1():
     # lock = request.form['lock']
     mystring = '55'
     try:
-        vehiclea = session['answer']
-        # mystring = mystring + str(vehiclea)
-        vehiclea.lock()
+        mystring = mystring + str(vehicle)
+        vehicle.lock()
     except Exception as e:
         mystring = str(e)
     # vehicle.lock()
@@ -100,6 +94,7 @@ def locker1():
     #     my_res = vehicle.unlock()
     return mystring
     # return 'script'
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
