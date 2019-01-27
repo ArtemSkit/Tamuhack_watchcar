@@ -70,10 +70,10 @@ def vehicle1():
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
     resp = vehicle.info()
-
+    resp.update(vehicle.lock())
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    return render_template('info.html', data=str(resp))
+    return jsonify(resp)
 
 
 @app.route('/locker', methods=['POST'])
