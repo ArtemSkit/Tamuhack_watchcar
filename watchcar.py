@@ -75,6 +75,7 @@ def vehicle():
 def locker():
     global access
     global vehicle
+    global code
     lock = request.form['lock']
     mystring = '55'
     try:
