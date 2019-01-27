@@ -71,11 +71,11 @@ def locker():
     global access
 
     lock = request.form['lock']
-    # vehicle_ids = smartcar.get_vehicle_ids(
-    #     access['access_token'])['vehicles']
+    vehicle_ids = smartcar.get_vehicle_ids(
+        access['access_token'])['vehicles']
     #
     # # instantiate the first vehicle in the vehicle id list
-    # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
     # vehicle.lock()
     # my_res = ''
     # if lock == '1':
