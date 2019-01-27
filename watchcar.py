@@ -49,21 +49,22 @@ def exchange():
 
 @app.route('/locker', methods=['POST'])
 def locker():
-    global access
-
-    lock = request.form['lock']
-    vehicle_ids = smartcar.get_vehicle_ids(
-        access['access_token'])['vehicles']
-
-    # instantiate the first vehicle in the vehicle id list
-    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-
-    my_res = ''
+    # global access
+    #
+    # lock = request.form['lock']
+    # vehicle_ids = smartcar.get_vehicle_ids(
+    #     access['access_token'])['vehicles']
+    #
+    # # instantiate the first vehicle in the vehicle id list
+    # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+    #
+    # my_res = ''
     # if lock == '1':
     #     my_res = vehicle.lock()
     # else:
     #     my_res = vehicle.unlock()
-    return '<script> alert(' + str(lock) + '</script>'
+    # return '<script> alert(' + str(lock) + '</script>'
+    return 'script'
 
 
 @app.route('/vehicle', methods=['GET'])
