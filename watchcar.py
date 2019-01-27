@@ -51,7 +51,7 @@ def exchange():
 def locker():
     global access
 
-    lock = request.args.get('lock')
+    lock = request.form['lock']
     vehicle_ids = smartcar.get_vehicle_ids(
         access['access_token'])['vehicles']
 
