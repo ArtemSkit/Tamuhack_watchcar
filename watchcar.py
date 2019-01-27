@@ -35,6 +35,23 @@ def login():
     return redirect(auth_url)
 
 
+@app.route('/locker', methods=['POST'])
+def locker():
+    lock = request.args.get('lock')
+    vehicle_ids = smartcar.get_vehicle_ids(
+        access['access_token'])['vehicles']
+
+    # instantiate the first vehicle in the vehicle id list
+    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+
+    my_res = ''
+    if lock == '1':
+        my_res = vehicle.lock()
+    else:
+        my_res = vehicle.unlock()
+    return '<script> alert(' + str(my_res) + '</script>'
+
+
 @app.route('/exchange', methods=['GET'])
 def exchange():
     code = request.args.get('code')
@@ -63,7 +80,7 @@ def vehicle():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    return render_template('info.html', data=jsonify(resp))
+    return render_template('info.html', data=str(jsonify(resp)))
 
 
 if __name__ == "__main__":
