@@ -68,7 +68,7 @@ def vehicle():
     return render_template('info.html', data=str(resp))
 
 
-@app.route('/locker', methods=['POST'])
+@app.route('/locker', methods=['GET'])
 def locker():
     global access
     global vehicle
