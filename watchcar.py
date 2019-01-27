@@ -93,7 +93,7 @@ def locker():
         with open('mycode.txt', 'r') as tar1:
             code = tar1.read().splitlines()[0]
             print(code)
-        # access = client.exchange_code(code)
+        access = client.exchange_code(code)
         vehicle_ids = smartcar.get_vehicle_ids(
             access['access_token'])['vehicles']
 
