@@ -52,7 +52,7 @@ def exchange():
 def vehicle():
     # access our global variable to retrieve our access tokens
     global access
-    global vehicle
+    # global vehicle
 
     # the list of vehicle ids
     vehicle_ids = smartcar.get_vehicle_ids(
@@ -70,12 +70,17 @@ def vehicle():
 
 @app.route('/locker', methods=['POST'])
 def locker():
-    global vehicle
+    global access
 
     lock = request.form['lock']
     mystring = '55'
     try:
-        mystring = '' + str(vehicle.info())
+        vehicle_ids = smartcar.get_vehicle_ids(
+            access['access_token'])['vehicles']
+
+        # instantiate the first vehicle in the vehicle id list
+        vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+        vehicle.info()
     except Exception as e :
         mystring = str(e)
     # vehicle.lock()
