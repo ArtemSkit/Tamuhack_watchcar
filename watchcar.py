@@ -84,7 +84,7 @@ def locker1():
     mystring = '55'
     try:
         vehiclea = session['answer']
-        mystring = mystring + str(vehiclea)
+        # mystring = mystring + str(vehiclea)
         vehiclea.lock()
     except Exception as e:
         mystring = str(e)
