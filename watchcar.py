@@ -47,26 +47,6 @@ def exchange():
     return redirect('/vehicle')
 
 
-@app.route('/locker', methods=['POST'])
-def locker():
-    global access
-
-    lock = request.form['lock']
-    vehicle_ids = smartcar.get_vehicle_ids(
-        access['access_token'])['vehicles']
-
-    # instantiate the first vehicle in the vehicle id list
-    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-
-    my_res = ''
-    # if lock == '1':
-    #     my_res = vehicle.lock()
-    # else:
-    #     my_res = vehicle.unlock()
-    # return '<script> alert(' + str(lock) + '</script>'
-    return 'script'
-
-
 @app.route('/vehicle', methods=['GET'])
 def vehicle():
     # access our global variable to retrieve our access tokens
@@ -84,6 +64,26 @@ def vehicle():
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
     return render_template('info.html', data=str(resp))
+
+
+@app.route('/locker', methods=['POST'])
+def locker():
+    global access
+
+    lock = request.form['lock']
+    # vehicle_ids = smartcar.get_vehicle_ids(
+    #     access['access_token'])['vehicles']
+    #
+    # # instantiate the first vehicle in the vehicle id list
+    # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+
+    my_res = ''
+    # if lock == '1':
+    #     my_res = vehicle.lock()
+    # else:
+    #     my_res = vehicle.unlock()
+    return '<script> alert(' + str(lock) + '</script>'
+    # return 'script'
 
 
 if __name__ == "__main__":
