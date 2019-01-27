@@ -59,11 +59,7 @@ def vehicle():
     # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
-    # resp = dict(vehicle.info() + vehicle.location())
-    #
-    # print(resp)
-
-    return str(type(vehicle.info()))
+    return jsonify(vehicle.info().update(vehicle.location()).update(vehicle.odometer()))
 
 
 if __name__ == "__main__":
