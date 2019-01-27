@@ -9,9 +9,11 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or \
+try:
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or \
     'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
-
+except Exception as e:
+    print('!!!!!!!!!' + str(e))
 @app.route("/")
 def hello():
     return "<h1 style='color:blue'>Hello There!</h1>"
