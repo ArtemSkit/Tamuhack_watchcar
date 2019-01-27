@@ -49,7 +49,16 @@ def exchange():
     # persistent storage
     access = client.exchange_code(code)
     # return redirect('/vehicle')
-    return str(access['access_token'])
+    vehicle_ids = smartcar.get_vehicle_ids(
+        access['access_token'])['vehicles']
+
+    # instantiate the first vehicle in the vehicle id list
+    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+
+    resp = vehicle.info()
+    resp.update(vehicle.odometer())
+    resp['data']['location'] = (vehicle.location())
+    return jsonify(resp)
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle():
@@ -66,8 +75,8 @@ def vehicle():
 
     resp = vehicle.info()
 
-    # resp.update(vehicle.odometer())
-    # resp['data']['location'] = (vehicle.location())
+    resp.update(vehicle.odometer())
+    resp['data']['location'] = (vehicle.location())
     return render_template('info.html', data=str(resp))
 
 
