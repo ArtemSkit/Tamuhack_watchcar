@@ -29,9 +29,10 @@ client = smartcar.AuthClient(
     test_mode=True
 )
 
-
+session['client'] = client
 @app.route('/login', methods=['GET'])
 def login():
+    client = session.get('client', None)
     auth_url = client.get_auth_url()
     return redirect(auth_url)
 
@@ -42,6 +43,7 @@ def exchange():
     # code = '11b7c847-b877-4632-82f0-a0598b35417b'
     # access our global variable and store our access tokens
     global access
+    client = session.get('client', None)
     # in a production app you'll want to store this in some kind of
     # persistent storage
     access = client.exchange_code(code)
