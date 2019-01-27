@@ -2,7 +2,6 @@ from flask import Flask, redirect, request, jsonify, render_template, session
 import smartcar
 from flask_cors import CORS
 import os
-from werkzeug.serving import WSGIRequestHandler
 
 vehicle = None
 os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
@@ -98,6 +97,5 @@ def locker1():
     return mystring
     # return 'script'
 
-WSGIRequestHandler.protocol_version = "HTTP/1.1"
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
