@@ -42,9 +42,6 @@ def login():
 def exchange():
     global code
     code = request.args.get('code')
-    with open('mycode.txt', 'w') as tar:
-        tar.write(code)
-        tar.flush()
     # access our global variable and store our access tokens
     global access
     # in a production app you'll want to store this in some kind of
@@ -84,21 +81,9 @@ def vehicle():
 
 @app.route('/locker', methods=['POST'])
 def locker():
-    global access
-    global vehicle
-    global code
     # lock = request.form['lock']
     mystring = '55'
     try:
-        with open('mycode.txt', 'r') as tar1:
-            code = tar1.read().splitlines()[0]
-            print(code)
-        access = client.exchange_code(code)
-        vehicle_ids = smartcar.get_vehicle_ids(
-            access['access_token'])['vehicles']
-
-        # instantiate the first vehicle in the vehicle id list
-        vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
         vehicle.odometer()
     except Exception as e :
         mystring = str(e)
