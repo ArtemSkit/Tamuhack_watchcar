@@ -37,8 +37,8 @@ def login():
 
 @app.route('/exchange', methods=['GET'])
 def exchange():
-    # code = request.args.get('code')
-    code = '11b7c847-b877-4632-82f0-a0598b35417b'
+    code = request.args.get('code')
+    # code = '11b7c847-b877-4632-82f0-a0598b35417b'
     # access our global variable and store our access tokens
     global access
     # in a production app you'll want to store this in some kind of
@@ -51,7 +51,7 @@ def exchange():
 def vehicle():
     # access our global variable to retrieve our access tokens
     global access
-    
+
     # the list of vehicle ids
     vehicle_ids = smartcar.get_vehicle_ids(
         access['access_token'])['vehicles']
@@ -63,7 +63,7 @@ def vehicle():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    return '1'
+    return jsonify(resp)
 
 
 if __name__ == "__main__":
