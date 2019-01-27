@@ -20,8 +20,6 @@ CORS(app)
 # global variable to save our access_token
 access = None
 vehicle = None
-global code
-
 
 client = smartcar.AuthClient(
     client_id=os.environ.get('CLIENT_ID'),
@@ -40,7 +38,6 @@ def login():
 
 @app.route('/exchange', methods=['GET'])
 def exchange():
-    global code
     code = request.args.get('code')
     # access our global variable and store our access tokens
     global access
@@ -58,6 +55,7 @@ def exchange():
     # resp.update(vehicle.odometer())
     # resp['data']['location'] = (vehicle.location())
     # return jsonify(resp)
+
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle1():
@@ -85,7 +83,8 @@ def locker():
     mystring = '55'
     try:
         mystring = mystring + str(vehicle)
-    except Exception as e :
+        vehicle.lock()
+    except Exception as e:
         mystring = str(e)
     # vehicle.lock()
     # my_res = ''
