@@ -72,7 +72,8 @@ def vehicle():
 def locker():
     global access
     global vehicle
-    lock = request.form['lock']
+    lock = request.args.get('lock')
+    # lock = request.form['lock']
     mystring = '55'
     try:
         # vehicle_ids = smartcar.get_vehicle_ids(
