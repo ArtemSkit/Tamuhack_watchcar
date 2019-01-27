@@ -63,7 +63,7 @@ def vehicle():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    return render_template('info.html', title='Home')
+    return render_template('info.html', data=jsonify(resp))
 
 
 if __name__ == "__main__":
