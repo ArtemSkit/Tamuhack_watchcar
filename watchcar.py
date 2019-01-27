@@ -19,7 +19,7 @@ CORS(app)
 
 # global variable to save our access_token
 access = None
-global vehicle
+vehicle = None
 global code
 
 
