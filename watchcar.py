@@ -63,7 +63,7 @@ def vehicle():
     #
     # print(resp)
 
-    return jsonify(type(vehicle.info()))
+    return str(type(vehicle.info()))
 
 
 if __name__ == "__main__":
