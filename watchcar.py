@@ -69,14 +69,14 @@ def vehicle1():
     # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
-    resp = vehicle.lock()
-    # resp.update(vehicle.lock())
-    # resp.update(vehicle.odometer())
-    # resp['data']['location'] = (vehicle.location())
-    return jsonify(resp)
+    resp = vehicle.info()
+
+    resp.update(vehicle.odometer())
+    resp['data']['location'] = (vehicle.location())
+    return render_template('info.html', data=str(resp))
 
 
-@app.route('/locker', methods=['POST'])
+@app.route('/locker', methods=['GET'])
 def locker1():
     # lock = request.form['lock']
     mystring = '55'
