@@ -56,6 +56,23 @@ def exchange():
     # resp['data']['location'] = (vehicle.location())
     # return jsonify(resp)
 
+def locker1():
+    # lock = request.form['lock']
+    mystring = '55'
+    try:
+        mystring = mystring + str(vehicle)
+        vehicle.lock()
+    except Exception as e:
+        mystring = str(e)
+    # vehicle.lock()
+    # my_res = ''
+    # if lock == '1':
+    #     my_res = vehicle.lock()
+    # else:
+    #     my_res = vehicle.unlock()
+    return mystring
+    # return 'script'
+
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle1():
@@ -73,26 +90,12 @@ def vehicle1():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
+    app.add_url_rule('/', 'locker', locker1)
     return render_template('info.html', data=str(resp))
 
 
-@app.route('/locker', methods=['GET'])
-def locker1():
-    # lock = request.form['lock']
-    mystring = '55'
-    try:
-        mystring = mystring + str(vehicle)
-        vehicle.lock()
-    except Exception as e:
-        mystring = str(e)
-    # vehicle.lock()
-    # my_res = ''
-    # if lock == '1':
-    #     my_res = vehicle.lock()
-    # else:
-    #     my_res = vehicle.unlock()
-    return mystring
-    # return 'script'
+# @app.route('/locker', methods=['GET'])
+
 
 
 if __name__ == "__main__":
