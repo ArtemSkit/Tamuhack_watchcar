@@ -49,7 +49,7 @@ def exchange():
     # persistent storage
     access = client.exchange_code(code)
     # return redirect('/vehicle')
-    return access
+    return str(access['access_token'])
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle():
