@@ -8,7 +8,7 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"FtQ8z\n\xec]/'
+app.secret_key = os.urandom(24)
 
 @app.route("/")
 def hello():
