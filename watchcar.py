@@ -48,17 +48,17 @@ def exchange():
     # in a production app you'll want to store this in some kind of
     # persistent storage
     access = client.exchange_code(code)
-    # return redirect('/vehicle')
-    vehicle_ids = smartcar.get_vehicle_ids(
-        access['access_token'])['vehicles']
-
-    # instantiate the first vehicle in the vehicle id list
-    vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-
-    resp = vehicle.info()
-    resp.update(vehicle.odometer())
-    resp['data']['location'] = (vehicle.location())
-    return jsonify(resp)
+    return redirect('/vehicle')
+    # vehicle_ids = smartcar.get_vehicle_ids(
+    #     access['access_token'])['vehicles']
+    #
+    # # instantiate the first vehicle in the vehicle id list
+    # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+    #
+    # resp = vehicle.info()
+    # resp.update(vehicle.odometer())
+    # resp['data']['location'] = (vehicle.location())
+    # return jsonify(resp)
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle():
@@ -85,7 +85,7 @@ def locker():
     global access
     global vehicle
     global code
-    lock = request.form['lock']
+    # lock = request.form['lock']
     mystring = '55'
     try:
         access = client.exchange_code(code)
