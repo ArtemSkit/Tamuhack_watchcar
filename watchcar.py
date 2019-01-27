@@ -77,7 +77,7 @@ def locker():
     try:
         mystring = '' + str(vehicle.info())
     except Exception as e :
-        mystring(str(e))
+        mystring = str(e)
     # vehicle.lock()
     # my_res = ''
     # if lock == '1':
