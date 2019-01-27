@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, jsonify
+from flask import Flask, redirect, request, jsonify, render_template
 import smartcar
 from flask_cors import CORS
 import os
@@ -62,7 +62,7 @@ def vehicle():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    return jsonify(resp)
+    return render_template('base.html', title='Home')
 
 
 if __name__ == "__main__":
