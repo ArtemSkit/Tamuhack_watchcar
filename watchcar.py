@@ -61,7 +61,10 @@ def vehicle():
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
 
     resp = vehicle.info()
-    session['vehicle'] = vehicle
+    try:
+        session['vehicle'] = vehicle
+    except Exception as e:
+        return str(e)
     # resp.update(vehicle.odometer())
     # resp['data']['location'] = (vehicle.location())
     return render_template('info.html', data=str(resp))
