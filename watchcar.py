@@ -63,7 +63,7 @@ def vehicle():
 
     resp = vehicle.info()
 
-    resp.update(vehicle.odometer())
+    # resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
     return render_template('info.html', data=str(resp))
 
@@ -80,7 +80,7 @@ def locker():
 
         # instantiate the first vehicle in the vehicle id list
         # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-        vehicle.info()
+        vehicle.odometer()
     except Exception as e :
         mystring = str(e)
     # vehicle.lock()
