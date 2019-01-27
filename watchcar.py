@@ -64,8 +64,7 @@ def vehicle():
     resp = vehicle.info()
 
     # resp.update(vehicle.odometer())
-    resp['data'] = ''
-    resp['data']['location'] = (vehicle.location())
+    # resp['data']['location'] = (vehicle.location())
     return render_template('info.html', data=str(resp))
 
 
