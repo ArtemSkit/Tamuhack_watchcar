@@ -2,6 +2,7 @@ from flask import Flask, redirect, request, jsonify, render_template
 import smartcar
 from flask_cors import CORS
 import os
+from werkzeug.serving import WSGIRequestHandler
 
 vehicle = None
 os.environ["CLIENT_ID"] = "98c99428-1311-4bf6-b49c-9138cb2e2d8f"
@@ -56,23 +57,6 @@ def exchange():
     # resp['data']['location'] = (vehicle.location())
     # return jsonify(resp)
 
-def locker1():
-    # lock = request.form['lock']
-    mystring = '55'
-    try:
-        mystring = mystring + str(vehicle)
-        vehicle.lock()
-    except Exception as e:
-        mystring = str(e)
-    # vehicle.lock()
-    # my_res = ''
-    # if lock == '1':
-    #     my_res = vehicle.lock()
-    # else:
-    #     my_res = vehicle.unlock()
-    return mystring
-    # return 'script'
-
 
 @app.route('/vehicle', methods=['GET'])
 def vehicle1():
@@ -90,13 +74,27 @@ def vehicle1():
 
     resp.update(vehicle.odometer())
     resp['data']['location'] = (vehicle.location())
-    app.add_url_rule('/', 'locker', locker1)
     return render_template('info.html', data=str(resp))
 
 
-# @app.route('/locker', methods=['GET'])
+@app.route('/locker', methods=['POST'])
+def locker1():
+    # lock = request.form['lock']
+    mystring = '55'
+    try:
+        mystring = mystring + str(vehicle)
+        vehicle.lock()
+    except Exception as e:
+        mystring = str(e)
+    # vehicle.lock()
+    # my_res = ''
+    # if lock == '1':
+    #     my_res = vehicle.lock()
+    # else:
+    #     my_res = vehicle.unlock()
+    return mystring
+    # return 'script'
 
-
-
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

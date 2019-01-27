@@ -8,8 +8,10 @@
 </form>
 <script>
   document.getElementById("lock").addEventListener("click", function(){
-  document.getElementById("myfield").value = "1";
-  document.getElementById("home").submit();
+  xhttp.open("POST", "/locker", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.setRequestHeader("Connection", "Keep-Alive");
+xhttp.send("lock=1");
 });
 
   document.getElementById("unlock").addEventListener("click", function(){
