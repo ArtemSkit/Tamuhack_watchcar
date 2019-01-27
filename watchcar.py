@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, jsonify, render_template
+from flask import Flask, redirect, request, jsonify, render_template, session
 import smartcar
 from flask_cors import CORS
 import os
@@ -10,7 +10,8 @@ os.environ["CLIENT_SECRET"] = "4108367c-d570-45c0-980a-d7bda65df183"
 os.environ["REDIRECT_URI"] = "https://watchcarapp.com/exchange"
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or \
+    'e5ac358c-f0bf-11e5-9e39-d3b532c10a28'
 
 @app.route("/")
 def hello():
@@ -69,6 +70,7 @@ def vehicle1():
 
     # instantiate the first vehicle in the vehicle id list
     vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
+    session['answer'] = vehicle
 
     resp = vehicle.info()
 
@@ -82,8 +84,9 @@ def locker1():
     # lock = request.form['lock']
     mystring = '55'
     try:
-        mystring = mystring + str(vehicle)
-        vehicle.lock()
+        vehiclea = session['answer']
+        mystring = mystring + str(vehiclea)
+        vehiclea.lock()
     except Exception as e:
         mystring = str(e)
     # vehicle.lock()
