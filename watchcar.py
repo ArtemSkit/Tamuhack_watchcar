@@ -76,8 +76,8 @@ def vehicle1():
     return render_template('info.html', data=str(resp))
 
 
-@app.route('/locker', methods=['POST'])
-def locker():
+@app.route('/locker', methods=['GET'])
+def locker1():
     # lock = request.form['lock']
     mystring = '55'
     try:
