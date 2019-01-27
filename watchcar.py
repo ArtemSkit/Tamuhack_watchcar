@@ -44,7 +44,7 @@ def exchange():
     # in a production app you'll want to store this in some kind of
     # persistent storage
     access = client.exchange_code(code)
-    return '', 200
+    return redirect('/vehicle')
 
 
 @app.route('/vehicle', methods=['GET'])
