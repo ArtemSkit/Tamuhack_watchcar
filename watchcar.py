@@ -76,13 +76,13 @@ def locker():
     #
     # # instantiate the first vehicle in the vehicle id list
     # vehicle = smartcar.Vehicle(vehicle_ids[0], access['access_token'])
-
-    my_res = ''
-    if lock == '1':
-        my_res = vehicle.lock()
-    else:
-        my_res = vehicle.unlock()
-    return '<script> alert( + str(my_res) + )</script>'
+    vehicle.lock()
+    # my_res = ''
+    # if lock == '1':
+    #     my_res = vehicle.lock()
+    # else:
+    #     my_res = vehicle.unlock()
+    return 'h'
     # return 'script'
 
 
