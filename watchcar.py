@@ -70,18 +70,21 @@ def vehicle():
 
 @app.route('/locker', methods=['POST'])
 def locker():
-    global access
     global vehicle
 
     lock = request.form['lock']
-
+    mystring = '55'
+    try:
+        mystring = '' + str(vehicle.info())
+    except Exception as e :
+        print(e)
     # vehicle.lock()
     # my_res = ''
     # if lock == '1':
     #     my_res = vehicle.lock()
     # else:
     #     my_res = vehicle.unlock()
-    return str(vehicle.info())
+    return mystring
     # return 'script'
 
 
